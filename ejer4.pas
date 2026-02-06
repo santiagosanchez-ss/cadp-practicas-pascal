@@ -10,6 +10,7 @@
 program ejercicio4;
 const 
     max: 2000;
+   
 type
     factura = record
         numero:integer;
@@ -18,7 +19,7 @@ type
     end;
     mes = array [1..max] of facturas;
 //procedures
-procedure recorrerFebrero (vectorF:mes; var cantidadFacturas:integer; dimL:integer; var arranca:integer; var cantidad:integer);
+procedure recorrerFebrero (vectorF:mes; dimL:integer; var arranca:integer; var cantidad:integer);
 var 
     i:integer;
 begin
@@ -39,19 +40,90 @@ begin
     end;
 
 end;
-procedure agregarEnero (var vectorE:mes; vectorF:mes; inicio:integer; cantidad:integer);
+procedure agregarEnero (var vectorE:mes; vectorF:mes; inicio:integer; cantidad:integer;dimle:integer);
+var 
+    i:integer;
 begin
-    for i:=
+    for i:=1 to cantidad do begin
+        insertarAlVector(vecE,vectorF[inicio],dimle);
+        inicio:= inicio + 1; 
+    end;
+end;
+procedure insertarAlVector ( var vectorE:mes; elemento:factura;var dimle:integer);
+begin
+    if (dimle < max) then 
+    begin 
+        dimle := dimle + 1;
+        vectorE[dimle] := elemento;
+    end;
 end;
 
 var
     vecE: mes; 
     vecF:mes;
     cantFacturas:integer;
-    dimL:integer;
+    dimLf:integer;
     dondeArranca:integer;
-    cantidad444:integer
+    cantidad444:integer;
+    DimLe:integer;
 begin 
-    recorrerFebrero ( vecF,cantFacturas,dimL,dondeArranca,cantidad444);
-    agregarEnero (vecE,vecF,dondeArranca,cantidad444);
+    recorrerFebrero ( vecF,dimLf,dondeArranca,cantidad444);
+    agregarEnero (vecE,vecF,dondeArranca,cantidad444,dimLe);
 end.
+
+//HECHO CON LISTAS 
+{program comercio;
+const dimf=2000;
+type
+  factura=record 
+    num:integer;
+    cod:integer;
+    monto:real;
+  end;
+lista=^nodo;
+nodo=record 
+  datos:factura;
+  sig:lista;
+end;
+
+procedure leer(var f:factura); {se dispone
+procedure cargarListaE(var LE:lista); {se dispone
+procedure cargarListaF(var LF:lista); {se dispone
+
+procedure agregarOrdenado(var l:lista;f:factura);
+var act,ant,nue:lista;
+begin
+  new(nue);
+  nue^.datos:=f;
+  act:=l;ant:=l;
+  while(act <> nil) and (f.cod  > act^.datos.cod) do begin
+    ant:=act;act:=act^.sig;
+  end;
+  if(act=ant) then
+    l:=nue
+  else
+    ant^.sig:=nue;
+  nue^.sig:=act;
+end;
+
+procedure procesar(var le:lista;lf:lista);
+var actF,antF:lista;
+begin
+  actF:=lf;
+  while(actF <> nil) and (actF^.datos.cod < 444) do begin
+    actF:=actF^.sig;
+  end;
+  while(actF <> nil) and (actF^.datos.cod = 444) do begin
+    agregarOrdenado(le,actF^.datos);
+    actF:=actF^.sig;
+  end;
+end;
+
+var le:lista;lf:lista;
+begin
+  le:=nil;lf:=nil;
+  cargarListaE(le);{se dispone
+  cargarListaF(lf);{se dispone
+  procesar(le,lf);
+end;
+}
