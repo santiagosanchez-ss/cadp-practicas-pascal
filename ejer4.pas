@@ -95,7 +95,8 @@ var act,ant,nue:lista;
 begin
   new(nue);
   nue^.datos:=f;
-  act:=l;ant:=l;
+  act:=l;
+  ant:=l;
   while(act <> nil) and (f.cod  > act^.datos.cod) do begin
     ant:=act;act:=act^.sig;
   end;
